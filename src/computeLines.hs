@@ -5,28 +5,41 @@
 -- computeLines
 -}
 
-type Line = ([Int], [Int], [Int])
+import Rules (applyRule, Rule)
+
+type Line = ([Int], [Int])
 
 infZero:: [Int]
 infZero = repeat 0
 
-initLine::[Int]
-initLine = infZero ++ [1] ++ infZero
+initLine::Line
+initLine = (infZero, 1 : infZero)
 
--- initLine::Line
--- initLine = (infZero, [1], infZero)
+listToTuples :: [Int] -> [(Int, Int, Int)]
+listToTuples (x:y:z:xs) = (x, y, z) : listToTuples (y:z:xs)
+listToTuples _ = []
 
-displayFrameAroundOne :: Int -> [Int] -> [Int]
-displayFrameAroundOne n line = take (2 * n + 1) $ drop (length line `div` 2 - n) line
+newList::Rule -> [Int] -> [Int]
+newList rule list = map (applyRule rule) $ listToTuples list
 
+-- computeList :: Rule -> [Int] -> [Int]
+-- computeList rule (a:b:c:rx) = applyRule rule (a, b, c) : computeList rule (b:c:rx)
+-- computeList _ _ = []
+--
+moveLast::Line -> Line
+moveLast (left, right) = (init left, last left:right)
 
+computeLine::Rule -> Line -> Line
+computeLine rule (left, ra:rb:right) = moveLast (newList rule (left++[ra]++[rb]), newList rule (ra:rb:right))
 
-getFrame:: Int -> Int -> [Int] -> [Int]
-getFrame id_from id_to l = take (id_to - id_from) $ drop id_from l
-
-moveLastNToMiddle :: Int -> Line -> Line
-moveLastNToMiddle n (left, middle, right) = (newLeft, newMiddle, right)
-  where
-    (restLeft, movedToMiddle) = splitAt (length left - n) left
-    newLeft = restLeft
-    newMiddle = movedToMiddle ++ middle
+getSecond::Line -> [Int]
+getSecond (_,right) = right
+-- getFrame::Int -> Line -> [Int]
+-- getFrame limit (_, right) = take limit right
+--
+-- computeRes::Line -> Rule -> Int -> Line
+-- computeRes line _ 0 = line
+-- computeRes line rule limit = computeRes (computeLine rule line) rule (limit - 1)
+--
+-- getRes::Rule -> Int -> Int -> [Int]
+-- getRes rule limit turn = getFrame limit $ computeRes initLine rule turn

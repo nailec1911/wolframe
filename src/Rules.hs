@@ -8,13 +8,16 @@
 module Rules
 (
     applyRule,
+    Rule,
 ) where
+
+type Rule = Int
 
 binToInt :: (Int, Int, Int) -> Int
 binToInt (x, y, z) = x * 4 + y * 2 + z
 
-getBit :: Int -> Int -> Int
+getBit :: Rule -> Int -> Int
 getBit rule bit = (rule `div` (2 ^ bit)) `mod` 2
 
-applyRule::(Int, Int, Int) -> Int -> Int
-applyRule tuple rule = getBit rule $ binToInt tuple
+applyRule::Rule -> (Int, Int, Int) -> Int
+applyRule rule tuple = getBit rule $ binToInt tuple
