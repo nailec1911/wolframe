@@ -29,7 +29,7 @@ checkArgs args
     | rule args >= 0
         && rule args <= 255
         && start args >= 0
-        && nblines args >= 0
+        && nblines args >= -1
         && window args >= 0
             = Just args
     | otherwise = Nothing
