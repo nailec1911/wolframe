@@ -26,21 +26,21 @@ import Lib
 -- listToTuples _ = []
 --
 -- newList::Rule -> [Int] -> [Int]
--- newList rule list = map (applyRule rule) $ listToTuples list
+-- newList conv list = map (applyRule conv) $ listToTuples list
 
 computeListR :: Rule -> [Int] -> [Int]
-computeListR rule (a:b:c:rx)
-    = applyRule rule (a, b, c) : computeListR rule (b:c:rx)
+computeListR conv (a:b:c:rx)
+    = applyRule conv (a, b, c) : computeListR conv (b:c:rx)
 computeListR _ _ = []
 
 computeListL :: Rule -> [Int] -> [Int]
-computeListL rule (a:b:c:rx)
-    = applyRule rule (c, b, a) : computeListL rule (b:c:rx)
+computeListL conv (a:b:c:rx)
+    = applyRule conv (c, b, a) : computeListL conv (b:c:rx)
 computeListL _ _ = []
 
 computeLine::Rule -> Line -> Line
-computeLine rule (la:lb:left, ra:rb:right)
-    = (computeListL rule (ra:la:lb:left), computeListR rule (la:ra:rb:right))
+computeLine conv (la:lb:left, ra:rb:right)
+    = (computeListL conv (ra:la:lb:left), computeListR conv (la:ra:rb:right))
 computeLine _ line = line
 
 moveLine::Int -> Line -> Line
@@ -52,5 +52,5 @@ moveLine _ line = line
 
 getFirstLine::Int -> Rule -> Line -> Line
 getFirstLine 0 _ line = line
-getFirstLine ind rule line
-    = getFirstLine (ind - 1) rule (computeLine rule line)
+getFirstLine ind conv line
+    = getFirstLine (ind - 1) conv (computeLine conv line)

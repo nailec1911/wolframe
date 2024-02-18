@@ -18,7 +18,7 @@ import ComputeLines (getFirstLine, computeLine, moveLine)
 import Lib (Line, initLine, Args(..))
 -- import ParseArgs
 
-convertLine::[Int] -> [Char]
+convertLine::[Int] -> String
 convertLine (1:endlist) = '*' : convertLine endlist
 convertLine (_:endlist) = ' ' : convertLine endlist
 convertLine _ = " "
