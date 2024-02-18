@@ -13,20 +13,13 @@ module ComputeLines
     computeListL,
     computeListR,
     computeLine,
-    getSecond,
     moveLine,
     getFirstLine,
 ) where
 
 
-import Rules (applyRule, Rule)
-type Line = ([Int], [Int])
-
-infZero:: [Int]
-infZero = repeat 0
-
-initLine::Line
-initLine = (infZero, 1 : infZero)
+import Rules
+import Lib
 
 -- listToTuples :: [Int] -> [(Int, Int, Int)]
 -- listToTuples (x:y:z:xs) = (x, y, z) : listToTuples (y:z:xs)
@@ -56,9 +49,6 @@ moveLine ind (la:left, ra:right)
     | ind > 0 = moveLine (ind - 1) (left, la:ra:right)
     | otherwise = moveLine (ind + 1) (ra:la:left, right)
 moveLine _ line = line
-
-getSecond::Line -> [Int]
-getSecond (_,right) = right
 
 getFirstLine::Int -> Rule -> Line -> Line
 getFirstLine 0 _ line = line

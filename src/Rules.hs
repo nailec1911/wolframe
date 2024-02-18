@@ -8,10 +8,9 @@
 module Rules
 (
     applyRule,
-    Rule,
 ) where
 
-type Rule = Int
+import Lib
 
 binToInt :: (Int, Int, Int) -> Int
 binToInt (x, y, z) = x * 4 + y * 2 + z

@@ -7,19 +7,12 @@
 
 module ParseArgs
 (
-    defaultArgs,
     getOpts,
-    Args (..),
 ) where
 
 import Text.Read
 import Data.Maybe
-
-data Args = Args {rule::Int, start::Int, nblines::Int, window::Int, move::Int}
-    deriving(Show)
-
-defaultArgs::Args
-defaultArgs = Args{rule = 0, start = 0, nblines= -1, window= 80, move= 0}
+import Lib (Args(..))
 
 getArg::String -> Int
 getArg arg = fromMaybe (error "Invalid argument: Not a number") $ readMaybe arg

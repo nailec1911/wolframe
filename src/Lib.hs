@@ -6,8 +6,24 @@
 -}
 
 module Lib
-    ( someFunc
-    ) where
+(
+    Args (..),
+    defaultArgs,
+    Line,
+    initLine,
+    Rule,
+) where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+data Args = Args {rule::Int, start::Int, nblines::Int, window::Int, move::Int}
+    deriving(Show)
+type Line = ([Int], [Int])
+type Rule = Int
+
+defaultArgs::Args
+defaultArgs = Args{rule = 0, start = 0, nblines= -1, window= 80, move= 0}
+
+infZero:: [Int]
+infZero = repeat 0
+
+initLine::Line
+initLine = (infZero, 1 : infZero)
