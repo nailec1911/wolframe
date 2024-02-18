@@ -14,10 +14,10 @@ import Lib (Args(..))
 import Text.Read (readMaybe)
 import Data.Maybe (isNothing)
 
-getInt::String -> Int
+getInt :: String -> Int
 getInt = read
 
-checkArgs::Args -> Maybe Args
+checkArgs :: Args -> Maybe Args
 checkArgs args
     | rule args >= 0
         && rule args <= 255
@@ -27,11 +27,11 @@ checkArgs args
             = Just args
     | otherwise = Nothing
 
-isNumber::String -> Bool
+isNumber :: String -> Bool
 isNumber str    | isNothing (readMaybe str::Maybe Int) = False
                 | otherwise = True
 
-getOpts::Args -> [String] -> Maybe Args
+getOpts :: Args -> [String] -> Maybe Args
 getOpts args ("--rule":val:agx) | isNumber val
                                 = getOpts args{rule = getInt val} agx
                                 | otherwise = Nothing

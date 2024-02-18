@@ -38,19 +38,19 @@ computeListL conv (a:b:c:rx)
     = applyRule conv (c, b, a) : computeListL conv (b:c:rx)
 computeListL _ _ = []
 
-computeLine::Rule -> Line -> Line
+computeLine :: Rule -> Line -> Line
 computeLine conv (la:lb:left, ra:rb:right)
     = (computeListL conv (ra:la:lb:left), computeListR conv (la:ra:rb:right))
 computeLine _ line = line
 
-moveLine::Int -> Line -> Line
+moveLine :: Int -> Line -> Line
 moveLine 0 line = line
 moveLine ind (la:left, ra:right)
     | ind > 0 = moveLine (ind - 1) (left, la:ra:right)
     | otherwise = moveLine (ind + 1) (ra:la:left, right)
 moveLine _ line = line
 
-getFirstLine::Int -> Rule -> Line -> Line
+getFirstLine :: Int -> Rule -> Line -> Line
 getFirstLine 0 _ line = line
 getFirstLine ind conv line
     = getFirstLine (ind - 1) conv (computeLine conv line)

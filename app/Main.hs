@@ -10,18 +10,14 @@ module Main (main) where
 import System.Environment (getArgs)
 import System.Exit (exitWith, ExitCode(..))
 
-import Lib (defaultArgs)
+import Lib (defaultArgs, Args(..))
 import ParseArgs (getOpts)
-import DisplayLines (wolframe)
+import DisplayLines (wolfram)
+
+handleErrors :: Maybe Args -> IO()
+handleErrors Nothing
+    = putStrLn "Invalid arguments" >> exitWith (ExitFailure 84)
+handleErrors (Just arg) = wolfram arg
 
 main :: IO ()
-main = --wolframe $ getOpts defaultArgs . getArgs
-    do
-    args <- getArgs
-    let maybeArg = getOpts defaultArgs args
-    case maybeArg of
-            Just arg -> wolframe arg
-            Nothing -> putStrLn "Invalid arguments"
-                    >> exitWith (ExitFailure 84)
-
-    -- print "end"
+main = getArgs >>= handleErrors . getOpts defaultArgs

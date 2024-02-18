@@ -18,5 +18,5 @@ binToInt (x, y, z) = x * 4 + y * 2 + z
 getBit :: Rule -> Int -> Int
 getBit conv bit = (conv `div` (2 ^ bit)) `mod` 2
 
-applyRule::Rule -> (Int, Int, Int) -> Int
+applyRule :: Rule -> (Int, Int, Int) -> Int
 applyRule conv tuple = getBit conv $ binToInt tuple
