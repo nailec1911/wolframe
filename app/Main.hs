@@ -7,9 +7,10 @@
 
 module Main (main) where
 
-import Lib (defaultArgs)
 import System.Environment (getArgs)
+import System.Exit (exitWith, ExitCode(..))
 
+import Lib (defaultArgs)
 import ParseArgs (getOpts)
 import DisplayLines (wolframe)
 
@@ -20,6 +21,7 @@ main = --wolframe $ getOpts defaultArgs . getArgs
     let maybeArg = getOpts defaultArgs args
     case maybeArg of
             Just arg -> wolframe arg
-            Nothing -> putStrLn "Invalid arguments, using default args"
+            Nothing -> putStrLn "Invalid arguments"
+                    >> exitWith (ExitFailure 84)
 
     -- print "end"

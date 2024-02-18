@@ -10,12 +10,12 @@ module ParseArgs
     getOpts,
 ) where
 
-import Text.Read
-import Data.Maybe
 import Lib (Args(..))
+import Text.Read (readMaybe)
+import Data.Maybe (isNothing)
 
-getArg::String -> Int
-getArg arg = fromMaybe (error "Invalid argument: Not a number") $ readMaybe arg
+getInt::String -> Int
+getInt = read
 
 checkArgs::Args -> Maybe Args
 checkArgs args
@@ -27,11 +27,25 @@ checkArgs args
             = Just args
     | otherwise = Nothing
 
+isNumber::String -> Bool
+isNumber str    | isNothing (readMaybe str::Maybe Int) = False
+                | otherwise = True
+
 getOpts::Args -> [String] -> Maybe Args
-getOpts args ("--rule":val:agx) = getOpts args{rule = getArg val} agx
-getOpts args ("--start":val:agx) = getOpts args{start = getArg val} agx
-getOpts args ("--lines":val:agx) = getOpts args{nblines = getArg val} agx
-getOpts args ("--window":val:agx) = getOpts args{window = getArg val} agx
-getOpts args ("--move":val:agx) = getOpts args{move = getArg val} agx
+getOpts args ("--rule":val:agx) | isNumber val
+                                = getOpts args{rule = getInt val} agx
+                                | otherwise = Nothing
+getOpts args ("--start":val:agx)    | isNumber val
+                                    = getOpts args{start = getInt val} agx
+                                    | otherwise = Nothing
+getOpts args ("--lines":val:agx)    | isNumber val
+                                    = getOpts args{nblines = getInt val} agx
+                                    | otherwise = Nothing
+getOpts args ("--window":val:agx)   | isNumber val
+                                    = getOpts args{window = getInt val} agx
+                                    | otherwise = Nothing
+getOpts args ("--move":val:agx) | isNumber val
+                                = getOpts args{move = getInt val} agx
+                                | otherwise = Nothing
 getOpts args [] = checkArgs args
 getOpts _ _ = Nothing
