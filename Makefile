@@ -7,12 +7,12 @@
 
 NAME	:=	wolfram
 
-dir_exe	:=	$(shell stack path --local-install-root)/bin/$(NAME)
+dir_exe	:=	$(shell stack path --local-install-root)/bin/wolfram-exe
 
 
-all: $(dir_exe)
+all:
 	stack build
-	cp $< wolfram
+	cp $(dir_exe) $(NAME)
 .PHONY: all
 
 clean:
