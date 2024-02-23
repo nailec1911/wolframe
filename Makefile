@@ -9,6 +9,9 @@ NAME	:=	wolfram
 
 dir_exe	:=	$(shell stack path --local-install-root)/bin/wolfram-exe
 
+test_path	:=	 $(shell stack path --local-hpc-root)
+
+coverage_path	=	test/coverage
 
 all:
 	stack build
@@ -22,6 +25,11 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 .PHONY: fclean
+
+tests_run:
+	mkdir -p $(coverage_path)
+	stack test --coverage
+	cp $(test_path)/$(NAME)/$(NAME)-test/$(NAME)-test.tix $(coverage_path)
 
 re: fclean all
 .PHONY: re
