@@ -25,7 +25,7 @@ type Line = ([Int], [Int])
 type Rule = Int
 
 defaultArgs :: Args
-defaultArgs = Args{rule = 0, start = 0, nblines = -1, window = 80, move = 0}
+defaultArgs = Args{rule = -1, start = 0, nblines = -1, window = 80, move = 0}
 
 infZero :: [Int]
 infZero = repeat 0

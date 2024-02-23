@@ -20,7 +20,7 @@ testDefaultarg =
     describe "defaultArgs" $
         it "creates default arguments with expected values" $ do
             let args = defaultArgs
-            rule args `shouldBe` 0
+            rule args `shouldBe` -1
             start args `shouldBe` 0
             nblines args `shouldBe` (-1)
             window args `shouldBe` 80
@@ -37,4 +37,4 @@ testInitline =
 testShowArgs :: Spec
 testShowArgs = describe "Show instance for Args" $
     it "correctly shows Args with default values" $
-        show defaultArgs `shouldBe` "Args {rule = 0, start = 0, nblines = -1, window = 80, move = 0}"
+        show defaultArgs `shouldBe` "Args {rule = -1, start = 0, nblines = -1, window = 80, move = 0}"
