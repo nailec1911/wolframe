@@ -29,7 +29,8 @@ displayFrame size (_,line) = putStrLn $ take size $ convertLine line
 displayLines :: Line -> Args -> IO ()
 displayLines _ (Args {nblines = 0}) = return ()
 displayLines line args =
-        displayFrame (window args) (moveLine (move args + 40) line)
+        displayFrame (window args)
+            (moveLine (move args + window args `div` 2) line)
         >> displayLines (computeLine (rule args) line)
                         args{nblines = nblines args - 1}
 
