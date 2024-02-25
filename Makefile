@@ -29,8 +29,8 @@ fclean: clean
 tests_run:
 	mkdir -p $(coverage_path)
 	stack test --coverage
-#	cp $(test_path)/$(NAME)/$(NAME)-test/$(NAME)-test.tix $(coverage_path)
-	stack hpc report --all --destdir $(coverage_path)
+	cp $(test_path)/$(NAME)/$(NAME)-test/$(NAME)-test.tix $(coverage_path)
+# stack hpc report --all --destdir $(coverage_path)
 
 re: fclean all
 .PHONY: re
