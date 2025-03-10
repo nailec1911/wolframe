@@ -5,16 +5,16 @@ x=600;
 y=400;
 start=0;
 move=0;
-if [ "$#" -eq 2 ]; then
+if [ "$#" -ge 2 ]; then
     x=$1;
     y=$2;
 fi
 
-if [ "$#" -eq 3 ]; then
+if [ "$#" -ge 3 ]; then
     start=$3;
 fi
 
-if [ "$#" -eq 4 ]; then
+if [ "$#" -ge 4 ]; then
     move=$4;
 fi
 
